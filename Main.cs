@@ -34,7 +34,7 @@ namespace TekMonts
         private Label label1;
         private Label label2;
         private Label label3;
-        int[] MuzzleVelocityArray = new int[17];
+
         int res = WinAPI.SystemParametersInfo(113, 0, 10, 0);
         public static Point pointxx(Vector2 vec)
         {
@@ -403,7 +403,7 @@ namespace TekMonts
                     Y = this.ClientRectangle.Height / 2 + 200
                 };
                 int Adress3, num6, name, aa, a2;
-                float newX, newnX, newY, newnY;
+                
                 string str;
                 double num4, num5;
                 float dist;
@@ -412,68 +412,7 @@ namespace TekMonts
                while (true)
                 {
 
-                    if (Settings.USESCOPE)
-                    {
-                        //No Scope
-                        if (Settings.scope == 0)
-                        {
-                            newnX = -0.857f;
-                            newX = 0.857f;
-                            newY = 0.453f;
-                            newnY = -0.453f;
-
-                            doScope(newX, newnX, newY, newnY);
-                            
-                        }
-
-                        //X2
-                        if(Settings.scope == 1)
-                        {
-                            newnX = -0.548f;
-                            newX = 0.548f;
-                            newY = 0.289f;
-                            newnY = -0.289f;
-
-                            doScope(newX, newnX, newY, newnY);
-
-                        }
-                        
-                        //X4
-                        if(Settings.scope == 2)
-                        {
-                            newnX = -0.246f;
-                            newX = 0.246f;
-                            newY = 0.130f;
-                            newnY = -0.130f;
-
-                            doScope(newX, newnX, newY, newnY);
-
-                        } 
-                        
-                        //X8
-                        if(Settings.scope == 3)
-                        {
-                            newnX = -0.136f;
-                            newX = 0.136f;
-                            newY = 0.072f;
-                            newnY = -0.072f;
-
-                            doScope(newX, newnX, newY, newnY);
-
-                        }
-
-                    }
-
-                    if (Settings.NoRecoil)
-                    {
-                        doModifyWeapon(false, 0, true);
-                    }
-
-                    if (Settings.MuzzleVilocityValue >= 1)
-                    {
-                        doModifyWeapon(true, Settings.MuzzleVilocityValue, false);
-                    }
-
+                    
 
                     center.X = this.Width / 2;
                     center.Y = (this.Height / 2) + 20;
@@ -811,66 +750,6 @@ namespace TekMonts
 
                 Environment.Exit(-1); //Force termination of the current process.
             }
-        }
-
-        private void doModifyWeapon(bool isMuzzleVelocity, int MultypeValue, bool isFirstTimeInit)
-        {
-            uint WeaponConfigTable = Mem.ReadMemory<uint>((int)Mem.MainProcedure + 0x60C);
-            uint Table = Mem.ReadMemory<uint>((int)(WeaponConfigTable + 0x40));
-            int EntrySize = 0x450;
-            int RecoilOff = 0x50;
-            int SpreadOff = 0x2EC;
-            int MuzzleVelocityOff = 0x34;
-            float NewF = 0.0f;
-            for (int i = 0; i < 17; i++)
-            {
-
-                uint weapon = Mem.ReadMemory<uint>((int)Table + (i * EntrySize));
-
-                uint recoilAddr = Mem.ReadMemory<uint>((int)weapon + RecoilOff);
-                uint spreadAddr = Mem.ReadMemory<uint>((int)weapon + SpreadOff);
-
-                uint MuzzleVelocityAddr = Mem.ReadMemory<uint>((int)weapon + MuzzleVelocityOff);
-
-                if (isFirstTimeInit)
-                {
-                    MuzzleVelocityArray[i] = (int)MuzzleVelocityAddr;
-                }
-
-                if (isMuzzleVelocity)
-                {
-                    int valueToWrite = MuzzleVelocityArray[i] * MultypeValue;
-                    Mem.WriteMemory<int>((int)MuzzleVelocityAddr, valueToWrite);
-                } else
-                {
-                    Mem.WriteMemory<int>((int)MuzzleVelocityAddr, MuzzleVelocityArray[i]);
-                    Mem.WriteMemory<float>((int)recoilAddr, NewF);
-                    Mem.WriteMemory<float>((int)spreadAddr, NewF);
-                }
-            }
-            Thread.Sleep(200);
-        }
-
-        private void doScope(float newX, float newnX, float newY, float newnY)
-        {
-            uint Zoom = Mem.ReadMemory<uint>((int)Mem.QSCamera + 0x4);
-            uint ZoomDetail = Mem.ReadMemory<uint>((int)Zoom + 0x10);
-            int X = 0x8C;
-            int nX = 0x88;
-            int nY = 0x94;
-            int Y = 0x90;
-            //Read address
-            uint XAddr = Mem.ReadMemory<uint>((int)ZoomDetail + X);
-            uint nXAddr = Mem.ReadMemory<uint>((int)ZoomDetail + nX);
-            uint YAddr = Mem.ReadMemory<uint>((int)ZoomDetail + Y);
-            uint nYAddr = Mem.ReadMemory<uint>((int)ZoomDetail + nY);
-
-            //Write to memory
-            Mem.WriteMemory<float>((int)XAddr, newnX);
-            Mem.WriteMemory<float>((int)nXAddr, newnX);
-            Mem.WriteMemory<float>((int)nYAddr, newnY);
-            Mem.WriteMemory<float>((int)YAddr, newY);
-            Thread.Sleep(200);
         }
 
         public void DrawMenu(Graphics g2)

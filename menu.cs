@@ -14,7 +14,7 @@ namespace ROEPublicCheat
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-
+        int[] MuzzleVelocityArray = new int[20];
         void update()
         {
             PLAYER_ESP_BUTTON.Text = (Settings.PlayerESP) ? "ON" : "OFF";
@@ -216,13 +216,136 @@ namespace ROEPublicCheat
         private void ScopeBar_Scroll(object sender, EventArgs e)
         {
             Settings.scope = ScopeBar.Value;
+            float newX, newnX, newY, newnY;
+            if (Settings.scope == 0)
+            {
+                newnX = -0.857f;
+                newX = 0.857f;
+                newY = 0.453f;
+                newnY = -0.453f;
+
+                doScope(newX, newnX, newY, newnY);
+
+            }
+
+            //X2
+            if (Settings.scope == 1)
+            {
+                newnX = -0.548f;
+                newX = 0.548f;
+                newY = 0.289f;
+                newnY = -0.289f;
+
+                doScope(newX, newnX, newY, newnY);
+
+            }
+
+            //X4
+            if (Settings.scope == 2)
+            {
+                newnX = -0.246f;
+                newX = 0.246f;
+                newY = 0.130f;
+                newnY = -0.130f;
+
+                doScope(newX, newnX, newY, newnY);
+
+            }
+
+            //X8
+            if (Settings.scope == 3)
+            {
+                newnX = -0.136f;
+                newX = 0.136f;
+                newY = 0.072f;
+                newnY = -0.072f;
+
+                doScope(newX, newnX, newY, newnY);
+
+            }
+
             ScopeBar.PerformLayout();
         }
 
         private void MUZZLE_VILOCITY_Scroll(object sender, EventArgs e)
         {
             Settings.MuzzleVilocityValue = MUZZLE_VILOCITY.Value;
+            doModifyWeapon(true, Settings.MuzzleVilocityValue, false);
             MUZZLE_VILOCITY.PerformLayout();
+        }
+
+        private void SCOPE_BUTTON_Click(object sender, EventArgs e)
+        {
+            Settings.USESCOPE = !Settings.USESCOPE;
+            ScopeBar.Enabled = Settings.USESCOPE;
+            SCOPE_BUTTON.PerformLayout();
+        }
+
+        private void NO_RECOIL_BUTTON_Click(object sender, EventArgs e)
+        {
+            Settings.NoRecoil = true;
+            NO_RECOIL_BUTTON.Enabled = false;
+            MUZZLE_VILOCITY.Enabled = true;
+            doModifyWeapon(false, 0, true);
+            NO_RECOIL_BUTTON.PerformLayout();
+        }
+
+        private void doModifyWeapon(bool isMuzzleVelocity, int MultypeValue, bool isFirstTimeInit)
+        {
+            IntPtr WeaponConfigTable = Mem.ReadMemory<IntPtr>(Mem.MainProcedure.ToInt32() + 0x60C);
+            IntPtr Table = Mem.ReadMemory<IntPtr>(WeaponConfigTable.ToInt32() + 0x40);
+            int EntrySize = 0x450;
+            int RecoilOff = 0x50;
+            int SpreadOff = 0x2EC;
+            int MuzzleVelocityOff = 0x34;
+            float NewF = 0.0f;
+            for (int i = 0; i < 20; i++)
+            {
+
+                IntPtr weapon = Mem.ReadMemory<IntPtr>(Table.ToInt32() + (i * EntrySize));
+
+                IntPtr recoilAddr = Mem.ReadMemory<IntPtr>(weapon.ToInt32() + RecoilOff);
+                IntPtr spreadAddr = Mem.ReadMemory<IntPtr>(weapon.ToInt32() + SpreadOff);
+
+                IntPtr MuzzleVelocityAddr = Mem.ReadMemory<IntPtr>(weapon.ToInt32() + MuzzleVelocityOff);
+
+                if (isFirstTimeInit)
+                {
+                    MuzzleVelocityArray[i] = (int)MuzzleVelocityAddr;
+                }
+                if (isMuzzleVelocity)
+                {
+                    int valueToWrite = MuzzleVelocityArray[i] * MultypeValue;
+                    Mem.WriteMemory<int>(MuzzleVelocityAddr.ToInt32(), valueToWrite);
+                }
+                else
+                {
+                    Mem.WriteMemory<int>(MuzzleVelocityAddr.ToInt32(), MuzzleVelocityArray[i]);
+                    Mem.WriteMemory<float>(recoilAddr.ToInt32(), NewF);
+                    Mem.WriteMemory<float>(spreadAddr.ToInt32(), NewF);
+                }
+            }
+        }
+
+        private void doScope(float newX, float newnX, float newY, float newnY)
+        {
+            IntPtr Zoom = Mem.ReadMemory<IntPtr>((int)Mem.QSCamera + 0x4);
+            IntPtr ZoomDetail = Mem.ReadMemory<IntPtr>((int)Zoom + 0x10);
+            int X = 0x8C;
+            int nX = 0x88;
+            int nY = 0x94;
+            int Y = 0x90;
+            //Read address
+            IntPtr XAddr = Mem.ReadMemory<IntPtr>(ZoomDetail.ToInt32() + X);
+            IntPtr nXAddr = Mem.ReadMemory<IntPtr>(ZoomDetail.ToInt32() + nX);
+            IntPtr YAddr = Mem.ReadMemory<IntPtr>(ZoomDetail.ToInt32() + Y);
+            IntPtr nYAddr = Mem.ReadMemory<IntPtr>(ZoomDetail.ToInt32() + nY);
+            MessageBox.Show("Begin doScope: ZoomLevel" + Settings.scope + ", XAddrValue: " + XAddr + ", nXAddrValue: " + nXAddr + ", YAddrValue: " + YAddr + ", nYAddrValue: " + nYAddr);
+            //Write to memory
+            Mem.WriteMemory<float>(XAddr.ToInt32(), newnX);
+            Mem.WriteMemory<float>(nXAddr.ToInt32(), newnX);
+            Mem.WriteMemory<float>(nYAddr.ToInt32(), newnY);
+            Mem.WriteMemory<float>(YAddr.ToInt32(), newY);
         }
     }
 }

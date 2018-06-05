@@ -64,6 +64,10 @@ namespace ROEPublicCheat
             this.label2 = new System.Windows.Forms.Label();
             this.BOX_BUTTON = new System.Windows.Forms.Button();
             this.AIMBOT_TAB = new System.Windows.Forms.TabPage();
+            this.MUZZLE_VILOCITY = new System.Windows.Forms.TrackBar();
+            this.label5 = new System.Windows.Forms.Label();
+            this.NO_RECOIL_BUTTON = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SCOPE_BUTTON = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.ScopeBar = new System.Windows.Forms.TrackBar();
@@ -82,17 +86,13 @@ namespace ROEPublicCheat
             this.AIMBOT_DISTANCE = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.credit = new System.Windows.Forms.Label();
-            this.NO_RECOIL_BUTTON = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.MUZZLE_VILOCITY = new System.Windows.Forms.TrackBar();
-            this.label5 = new System.Windows.Forms.Label();
             this.TABS.SuspendLayout();
             this.ESP_TAB.SuspendLayout();
             this.AIMBOT_TAB.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MUZZLE_VILOCITY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScopeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FOV_BAR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.RANGE_AIMBOT)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MUZZLE_VILOCITY)).BeginInit();
             this.SuspendLayout();
             // 
             // ESP_PLAYER
@@ -557,6 +557,59 @@ namespace ROEPublicCheat
             this.AIMBOT_TAB.TabIndex = 1;
             this.AIMBOT_TAB.Text = "MISC";
             // 
+            // MUZZLE_VILOCITY
+            // 
+            this.MUZZLE_VILOCITY.Enabled = false;
+            this.MUZZLE_VILOCITY.LargeChange = 10;
+            this.MUZZLE_VILOCITY.Location = new System.Drawing.Point(433, 200);
+            this.MUZZLE_VILOCITY.Margin = new System.Windows.Forms.Padding(2);
+            this.MUZZLE_VILOCITY.Maximum = 100;
+            this.MUZZLE_VILOCITY.Minimum = 1;
+            this.MUZZLE_VILOCITY.Name = "MUZZLE_VILOCITY";
+            this.MUZZLE_VILOCITY.Size = new System.Drawing.Size(93, 45);
+            this.MUZZLE_VILOCITY.SmallChange = 5;
+            this.MUZZLE_VILOCITY.TabIndex = 52;
+            this.MUZZLE_VILOCITY.Value = 1;
+            this.MUZZLE_VILOCITY.Scroll += new System.EventHandler(this.MUZZLE_VILOCITY_Scroll);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Malgun Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label5.Location = new System.Drawing.Point(283, 206);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(128, 25);
+            this.label5.TabIndex = 51;
+            this.label5.Text = "RAPID HACK";
+            // 
+            // NO_RECOIL_BUTTON
+            // 
+            this.NO_RECOIL_BUTTON.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.NO_RECOIL_BUTTON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NO_RECOIL_BUTTON.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NO_RECOIL_BUTTON.Location = new System.Drawing.Point(433, 162);
+            this.NO_RECOIL_BUTTON.Margin = new System.Windows.Forms.Padding(2);
+            this.NO_RECOIL_BUTTON.Name = "NO_RECOIL_BUTTON";
+            this.NO_RECOIL_BUTTON.Size = new System.Drawing.Size(93, 26);
+            this.NO_RECOIL_BUTTON.TabIndex = 50;
+            this.NO_RECOIL_BUTTON.Text = "OFF";
+            this.NO_RECOIL_BUTTON.UseVisualStyleBackColor = false;
+            this.NO_RECOIL_BUTTON.Click += new System.EventHandler(this.NO_RECOIL_BUTTON_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Malgun Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label4.Location = new System.Drawing.Point(283, 163);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(114, 25);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "NO RECOIL";
+            // 
             // SCOPE_BUTTON
             // 
             this.SCOPE_BUTTON.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -569,6 +622,7 @@ namespace ROEPublicCheat
             this.SCOPE_BUTTON.TabIndex = 48;
             this.SCOPE_BUTTON.Text = "OFF";
             this.SCOPE_BUTTON.UseVisualStyleBackColor = false;
+            this.SCOPE_BUTTON.Click += new System.EventHandler(this.SCOPE_BUTTON_Click);
             // 
             // label3
             // 
@@ -584,6 +638,7 @@ namespace ROEPublicCheat
             // 
             // ScopeBar
             // 
+            this.ScopeBar.Enabled = false;
             this.ScopeBar.LargeChange = 1;
             this.ScopeBar.Location = new System.Drawing.Point(433, 106);
             this.ScopeBar.Margin = new System.Windows.Forms.Padding(2);
@@ -779,58 +834,6 @@ namespace ROEPublicCheat
             this.credit.TabIndex = 37;
             this.credit.Text = "ROE External by TekMonts";
             // 
-            // NO_RECOIL_BUTTON
-            // 
-            this.NO_RECOIL_BUTTON.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.NO_RECOIL_BUTTON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NO_RECOIL_BUTTON.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NO_RECOIL_BUTTON.Location = new System.Drawing.Point(433, 162);
-            this.NO_RECOIL_BUTTON.Margin = new System.Windows.Forms.Padding(2);
-            this.NO_RECOIL_BUTTON.Name = "NO_RECOIL_BUTTON";
-            this.NO_RECOIL_BUTTON.Size = new System.Drawing.Size(93, 26);
-            this.NO_RECOIL_BUTTON.TabIndex = 50;
-            this.NO_RECOIL_BUTTON.Text = "OFF";
-            this.NO_RECOIL_BUTTON.UseVisualStyleBackColor = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Malgun Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label4.Location = new System.Drawing.Point(283, 163);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(114, 25);
-            this.label4.TabIndex = 49;
-            this.label4.Text = "NO RECOIL";
-            // 
-            // MUZZLE_VILOCITY
-            // 
-            this.MUZZLE_VILOCITY.Enabled = false;
-            this.MUZZLE_VILOCITY.LargeChange = 10;
-            this.MUZZLE_VILOCITY.Location = new System.Drawing.Point(433, 200);
-            this.MUZZLE_VILOCITY.Margin = new System.Windows.Forms.Padding(2);
-            this.MUZZLE_VILOCITY.Maximum = 100;
-            this.MUZZLE_VILOCITY.Minimum = 1;
-            this.MUZZLE_VILOCITY.Name = "MUZZLE_VILOCITY";
-            this.MUZZLE_VILOCITY.Size = new System.Drawing.Size(93, 45);
-            this.MUZZLE_VILOCITY.SmallChange = 5;
-            this.MUZZLE_VILOCITY.TabIndex = 52;
-            this.MUZZLE_VILOCITY.Value = 1;
-            this.MUZZLE_VILOCITY.Scroll += new System.EventHandler(this.MUZZLE_VILOCITY_Scroll);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Malgun Gothic", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label5.Location = new System.Drawing.Point(283, 206);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(128, 25);
-            this.label5.TabIndex = 51;
-            this.label5.Text = "RAPID HACK";
-            // 
             // menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -853,10 +856,10 @@ namespace ROEPublicCheat
             this.ESP_TAB.PerformLayout();
             this.AIMBOT_TAB.ResumeLayout(false);
             this.AIMBOT_TAB.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MUZZLE_VILOCITY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScopeBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FOV_BAR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RANGE_AIMBOT)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.MUZZLE_VILOCITY)).EndInit();
             this.ResumeLayout(false);
 
         }

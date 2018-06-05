@@ -14,9 +14,9 @@ namespace TekMonts
     public static int m_iNumberOfBytesWritten = 0;
     public static Process m_Process;
     public static IntPtr m_pProcessHandle;
-    public static uint MainProcedure;
-    public static uint QSCamera;
-    public static uint EntityList;
+    public static IntPtr MainProcedure;
+    public static IntPtr QSCamera;
+    public static IntPtr EntityList;
     private const int PROCESS_VM_OPERATION = 8;
     private const int PROCESS_VM_READ = 16;
     private const int PROCESS_VM_WRITE = 32;
@@ -26,13 +26,13 @@ namespace TekMonts
       if ((uint) Process.GetProcessesByName(ProcessName).Length > 0U)
       {
         Mem.m_Process = Process.GetProcessesByName(ProcessName)[0];
-        Mem.MainProcedure = ReadMemory<uint>(Offsets.MainProcedure);
-        Mem.QSCamera = ReadMemory<uint>(Offsets.QSCamera);
-        Mem.EntityList = ReadMemory<uint>(Offsets.EntityList);
+        Mem.MainProcedure = ReadMemory<IntPtr>(Offsets.MainProcedure);
+        Mem.QSCamera = ReadMemory<IntPtr>(Offsets.QSCamera);
+        Mem.EntityList = ReadMemory<IntPtr>(Offsets.EntityList);
       }
       else
       {
-        int num = (int) MessageBox.Show("Open Ros.exe first");
+        int num = (int) MessageBox.Show("Open Europa_Client.exe first");
         Environment.Exit(1);
       }
       Mem.m_pProcessHandle = Mem.OpenProcess(56, false, Mem.m_Process.Id);
